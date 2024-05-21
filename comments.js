@@ -21,25 +21,22 @@
 // use comments.js as middleware
 
 const express = require('express');
-const app = express();
 const comments = require('./comments');
 
 app.use('/comments', comments);
 
 app.listen(3000, () => {
-  console.log('Server is listening on port 3000');
+        console.log('Server is listening on port 3000');
 });
 
 // Path: comments.js
-const express = require('express');
-const router = express.Router();
-
+// Remove the duplicate declaration of 'router'
 router.get('/', (req, res) => {
-  res.send('Get all comments');
+    res.send('Get all comments');
 });
 
 router.post('/', (req, res) => {
-  res.send('Post a comment');
+    res.send('Post a comment');
 });
 
 router.delete('/', (req, res) => {
@@ -56,19 +53,20 @@ const comments = require('./comments');
 app.use('/comments', comments);
 
 app.listen(3000, () => {
-  console.log('Server is listening on port 3000');
+        console.log('Server is listening on port 3000');
 });
 
 // Path: comments.js
 const express = require('express');
-const router = express.Router();
+// Remove the duplicate declaration of 'router'
+// const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.send('Get all comments');
+    res.send('Get all comments');
 });
 
 router.post('/', (req, res) => {
-  res.send('Post a comment');
+    res.send('Post a comment');
 });
 
 router.delete('/', (req, res) => {
@@ -78,14 +76,12 @@ router.delete('/', (req, res) => {
 module.exports = router;
 
 // Path: index.js
-const express = require('express');
-const app = express();
 const comments = require('./comments');
 
 app.use('/comments', comments);
 
 app.listen(3000, () => {
-  console.log('Server is listening on port 3000');
+    console.log('Server is listening on port 3000');
 });
 
 // Path: comments.js
@@ -93,12 +89,13 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.send('Get all comments');
+    res.send('Get all comments');
 });
 
 router.post('/', (req, res) => {
-  res.send('Post a comment');
+    res.send('Post a comment');
 });
 
 router.delete('/', (req, res) => {
-  res.send
+    res.send('Delete a comment');
+});
