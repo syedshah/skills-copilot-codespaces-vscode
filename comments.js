@@ -1,101 +1,48 @@
 // create web server
-// create a route to get comments
-// create a route to post comments
-// create a route to delete comments
-
-// Path: index.js
-// import express
-// import comments.js
-// create web server
-// use comments.js as middleware
-
-// Path: comments.js
-// create a route to get comments
-// create a route to post comments
-// create a route to delete comments
-
-// Path: index.js
-// import express
-// import comments.js
-// create web server
-// use comments.js as middleware
-
+// load express
 const express = require('express');
-const comments = require('./comments');
-
-app.use('/comments', comments);
-
-app.listen(3000, () => {
-        console.log('Server is listening on port 3000');
-});
-
-// Path: comments.js
-// Remove the duplicate declaration of 'router'
-router.get('/', (req, res) => {
-    res.send('Get all comments');
-});
-
-router.post('/', (req, res) => {
-    res.send('Post a comment');
-});
-
-router.delete('/', (req, res) => {
-  res.send('Delete a comment');
-});
-
-module.exports = router;
-
-// Path: index.js
-const express = require('express');
+// create express app
 const app = express();
-const comments = require('./comments');
+// load body-parser
+const bodyParser = require('body-parser');
+// load comments file
+const comments = require('./comments.js');
+// load fs
+const fs = require('fs');
+// load path
+const path = require('path');
+// load cors
+const cors = require('cors');
+// set up cors
+app.use(cors());
+// set up bodyParser
+app.use(bodyParser.json());
+// set up express to serve static files
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/comments', comments);
+// create a get request to get all comments
+app.get('/comments', (req, res) => {
+    res.json(comments);
+});
 
+// create a post request to add a comment
+app.post('/comments', (req, res) => {
+    // add a comment to the comments array
+    comments.push(req.body);
+    // write the new comments array to the comments.json file
+    fs.writeFile('./comments.json', JSON.stringify(comments), (err) => {
+        if (err) {
+            // if there is an error, send a status code of 500
+            res.sendStatus(500);
+        } else {
+            // if there is no error, send a status code of 201
+            res.sendStatus(201);
+        }
+    });
+});
+
+// set up server to listen on port 3000
 app.listen(3000, () => {
-        console.log('Server is listening on port 3000');
+    console.log('Server is running on port 3000');
 });
 
-// Path: comments.js
-const express = require('express');
-// Remove the duplicate declaration of 'router'
-// const router = express.Router();
-
-router.get('/', (req, res) => {
-    res.send('Get all comments');
-});
-
-router.post('/', (req, res) => {
-    res.send('Post a comment');
-});
-
-router.delete('/', (req, res) => {
-  res.send('Delete a comment');
-});
-
-module.exports = router;
-
-// Path: index.js
-const comments = require('./comments');
-
-app.use('/comments', comments);
-
-app.listen(3000, () => {
-    console.log('Server is listening on port 3000');
-});
-
-// Path: comments.js
-const express = require('express');
-const router = express.Router();
-
-router.get('/', (req, res) => {
-    res.send('Get all comments');
-});
-
-router.post('/', (req, res) => {
-    res.send('Post a comment');
-});
-
-router.delete('/', (req, res) => {
-    res.send('Delete a comment');
-});
